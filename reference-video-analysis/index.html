@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>参考视频逐帧拆解 · Motion Reel 分析</title>
+<style>
+:root{
+  --paper:#f4f2ea; --ink:#0d0d0d; --lime:#c8f31d; --gray:#6b6b60; --line:#dcdad0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",sans-serif;line-height:1.75}
+.wrap{max-width:1080px;margin:0 auto;padding:56px 28px 100px}
+.hero{border-bottom:3px solid var(--ink);padding-bottom:36px;margin-bottom:44px}
+.hero .tag{display:inline-block;background:var(--ink);color:var(--lime);font-size:12px;letter-spacing:.2em;padding:5px 14px;border-radius:99px;margin-bottom:18px}
+h1{font-size:clamp(34px,6vw,58px);font-weight:900;letter-spacing:-.02em;line-height:1.15}
+.hero p.sub{color:var(--gray);margin-top:14px;font-size:15px}
+.meta{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px;font-size:13px;color:var(--gray)}
+.meta b{color:var(--ink)}
+h2{font-size:26px;font-weight:900;margin:64px 0 8px;display:flex;align-items:center;gap:12px}
+h2::before{content:"";width:14px;height:14px;background:var(--lime);border:2px solid var(--ink);border-radius:4px}
+.lead{color:var(--gray);font-size:14px;margin-bottom:26px}
+.dna{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.dna .card{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:16px 18px}
+.dna .card b{display:block;font-size:15px;margin-bottom:6px}
+.dna .card span{font-size:13px;color:var(--gray)}
+.dna .card i{font-style:normal;background:var(--lime);border-radius:6px;padding:1px 8px;font-size:11px;font-weight:700;margin-left:6px}
+.scene{background:#fff;border:2px solid var(--ink);border-radius:18px;overflow:hidden;margin:26px 0}
+.scene .head{display:flex;align-items:baseline;gap:14px;padding:16px 22px;border-bottom:2px solid var(--ink);flex-wrap:wrap}
+.scene .no{font-weight:900;color:var(--ink);background:var(--lime);padding:2px 12px;border-radius:99px;font-size:13px;white-space:nowrap}
+.scene .head h3{font-size:19px;font-weight:900}
+.scene .head .tc{margin-left:auto;font-family:Consolas,monospace;font-size:12px;color:var(--gray);white-space:nowrap}
+.scene img{width:100%;display:block}
+.scene .body{padding:18px 22px 22px}
+.scene .body p{font-size:14px;margin-bottom:10px}
+.scene .body .motion{font-size:13.5px;background:var(--paper);border-left:4px solid var(--lime);padding:10px 14px;border-radius:0 10px 10px 0}
+.scene .body .motion b{font-size:12px;letter-spacing:.15em;color:var(--gray)}
+.use{width:100%;border-collapse:collapse;margin-top:8px;font-size:13.5px;background:#fff}
+.use th{background:var(--ink);color:var(--lime);padding:9px 12px;text-align:left;font-size:12.5px}
+.use td{border:1px solid var(--line);padding:9px 12px;vertical-align:top}
+.yes{color:#1c7c1c;font-weight:700;white-space:nowrap}
+.no2{color:#b3540a;font-weight:700;white-space:nowrap}
+.foot{margin-top:70px;padding-top:22px;border-top:2px solid var(--ink);font-size:12px;color:var(--gray);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <span class="tag">REFERENCE VIDEO · FRAME BY FRAME</span>
+    <h1>参考视频逐帧拆解<br>动态分析报告</h1>
+    <p class="sub">对微信提供的 Motion Reel 参考片（31.9 秒）按 2 帧/秒全量抽帧（64 帧）逐格分析，关键节点以高清截图 + 文字描述固化，作为官网动态版设计语言的原始依据。</p>
+    <div class="meta">
+      <span>片长 <b>31.9 s</b></span>
+      <span>分辨率 <b>1280 × 720</b></span>
+      <span>抽帧密度 <b>2 帧/秒（64 帧）</b></span>
+      <span>分析样本 <b>18 张关键帧高清图</b></span>
+      <span>片体本质 <b>「网站式动效 Demo Reel」——每个场景即一个网页 Hero 布局</b></span>
+    </div>
+  </div>
+
+  <h2>一、全片动效 DNA（10 条核心手法）</h2>
+  <p class="lead">整部片子就是这 10 种手法的排列组合。全片有两条贯穿线：①四角等宽字体 HUD（时间码 / 章节号 / 录制点）从头跑到尾；②整屏色块切换（黑→橙→蓝→灰→黑→酸绿→米白→黑→酸绿→黑）承担章节节奏。</p>
+  <div class="dna">
+    <div class="card"><b>① 整屏色块切换转场</b><span>场景之间不用淡入淡出，直接整屏换底色（黑/橙/蓝/灰/酸绿/米白），节奏像切镜头。</span></div>
+    <div class="card"><b>② 巨型字排版 + 打字机</b><span>超大超粗黑体标题，逐字打出（CLA…→CLAUDE），句点用对比色强调（CLAUDE<i class="dot" style="background:var(--lime);padding:0 4px;border-radius:3px">·</i>橙点）。</span></div>
+    <div class="card"><b>③ 无限跑马灯文字墙</b><span>多行大字反向斜向滚动（MOTION×N），高速时带动态模糊拖影。</span></div>
+    <div class="card"><b>④ 粒子聚散变形</b><span>白色粒子聚成球体 → 流变成红蓝双色螺旋曲线 → 散开成弧，全程形态渐变。</span></div>
+    <div class="card"><b>⑤ 3D 金属/果冻形体</b><span>扭结环、条纹莫比乌斯带、流动扭管、果冻星形，绿银渐变材质，缓慢旋转摆动。</span></div>
+    <div class="card"><b>⑥ 图案矩阵动画</b><span>点阵/方块阵列逐格变色变形（点→星形→十字），以及 3D 方块地形起伏。</span></div>
+    <div class="card"><b>⑦ Glitch 故障</b><span>RGB 色散分离、画面位移错位（方块海彩色撕裂）、文字残影。</span></div>
+    <div class="card"><b>⑧ HUD 取景框系统</b><span>四角等宽字体标注：时间码、章节号、录制红点、16:9 比例——模拟摄影机/剪辑软件界面。</span></div>
+    <div class="card"><b>⑨ 节拍可视化</b><span>底部音频波形条随节拍跳动（HIT THE BEAT / EVERY FRAME EXACTLY ON TIME）。</span></div>
+    <div class="card"><b>⑩ 幽灵描边字叠层</b><span>实心大字背后叠一层同词描边空心字（BOLD/PRECISE/ALIVE），做厚度感。</span></div>
+  </div>
+
+  <h2>二、逐场景拆解（关键帧 + 动态描述）</h2>
+  <p class="lead">11 个场景按时间顺序排列。每个场景：高清截图 + 「这一帧里什么在动、怎么动」。</p>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 01</span><h3>章节卡 · 黑幕定场</h3><span class="tc">00:00.0 – 00:01.5</span></div>
+    <img src="frames/k01.jpg" alt="章节卡">
+    <div class="body">
+      <p>近黑底上一行白色超粗标题「Opus 5.5 Max」，下方小号等宽字标注页码。画面四角是等宽字体 HUD（左上项目名、右上参数、底部时间码）。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;文字整体静止定场；唯一在动的是 HUD 里的时间码数字（每帧跳变）和闪烁的录制指示点——用「仪表在走、画面不动」制造蓄势感。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 02</span><h3>橙球放大 · 色块转场 + 字体选中框</h3><span class="tc">00:02.0 – 00:03.5</span></div>
+    <img src="frames/k02.jpg" alt="橙球放大">
+    <div class="body">
+      <p>黑底中部出现一条白色细横线（地平线），一颗橙红小球沿线漂浮移动；下一瞬小球急速放大成整屏橙红色块（转场），随后橙底黑字「EVERY」压出；紧接着切黑底橙字「FRAME」，文字四角出现蓝色选中控制点和小工具条。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;小球沿地平线平移 → 半径瞬爆式放大（scale 1→30， ease-in）→ 整屏色块成立 → 标题字压入 → 选中框在字周围闪现，模拟设计软件里"框选中文字"的动作。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 03</span><h3>Glitch 故障 + Loading + 图案矩阵</h3><span class="tc">00:04.0 – 00:06.5</span></div>
+    <img src="frames/k05.jpg" alt="glitch">
+    <div class="body">
+      <p>蓝底上的白色字形发生 RGB 色散分离（红/青错位重影）；切灰底一个细线圆环 loading；再切纯黑底上的白色圆点矩阵——矩阵图案逐帧变化：全点阵 → 中心泛蓝 → 星形/十字图案 → 混入红蓝彩色方块。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;glitch 是 1–2 帧的瞬时不规则位移（无过渡、靠抖动制造故障感）；圆环是角度扫描动画；点阵则是逐格（per-cell）随机变色 + 图案翻转，形成"像素图案在呼吸"的效果。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 04</span><h3>3D 方块海 · 红球弹跳</h3><span class="tc">00:07.0 – 00:08.5</span></div>
+    <img src="frames/k07.jpg" alt="方块海">
+    <div class="body">
+      <p>白色方块组成透视地形海，随机方块升红、升蓝；一颗红色大球悬浮在方块海上方。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;方块做波浪式升降（类似音频均衡器的空间化）；红球上下弹跳 + 轻微滚动；镜头整体缓慢横移，让地形产生视差纵深。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 05</span><h3>MOTION 跑马灯文字墙</h3><span class="tc">00:08.5 – 00:11.5</span></div>
+    <img src="frames/k08.jpg" alt="MOTION 跑马灯墙">
+    <div class="body">
+      <p>整屏被"文字墙"填满：多行蓝底白字「MOTION」斜向平铺无限滚动，行与行方向相反；中间横贯一条橙红色条，条内黑字「MOTION」反向滚动；高速滚动时全部文字带强烈动态模糊拖影。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;三组文字带（上斜行、橙条、下斜行）速率不同、方向交错；速度先快后慢再加速，模糊量随速度同步增减——这是全片最"吵"的一个场景，负责节奏高峰。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 06</span><h3>粒子聚散 · 变形动画</h3><span class="tc">00:10.5 – 00:11.5</span></div>
+    <img src="frames/k09.jpg" alt="粒子">
+    <div class="body">
+      <p>纯黑底上，数万颗白色微粒聚成一个致密球体（左）；随即球体被"拉开"，粒子流变成红蓝双色交织的螺旋曲线（中），最后散开成一道弧形尾巴（右）。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;粒子在三个形态目标点之间流态渐变（球 → 螺旋 → 弧），伴随颜色从纯白渐染为红/蓝双分；形态切换无剪辑、完全连续，是全片唯一"软变形"段落，负责呼吸感。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 07</span><h3>拼贴卡 + 彩色 Glitch + 打字机定名</h3><span class="tc">00:12.0 – 00:15.5</span></div>
+    <img src="frames/k09.jpg" alt="FRAME IS CO$ 拼贴"><img src="frames/k11.jpg" alt="CLAUDE 打字机" style="margin-top:8px">
+    <div class="body">
+      <p>过渡帧：灰底小球拖着 MOTION 文字残影；随后黑底上拼贴出「FRAME / is / CO$」三张卡片（橙字白卡、纯白卡、蓝底白字卡）+ 两侧点阵与方块海小窗；方块海窗口发生彩色位移撕裂 glitch。接着黑底逐字打出「CLA…」→「CLAUDE」，右下角等宽小字逐一出现（MOTION DESIGNER · SANFRAN · 2026），句点变橙色，最后一行小字滑入：「every frame of this reel is code」。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;三段式：残影淡出 → 拼贴卡逐张"盖章式"落位 + glitch 撕裂 2 帧 → 打字机逐字上屏 + 强调色句点 + 信息行阶梯滑入。信息密度由碎片收拢到一句话，是全片的"落版"。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 08</span><h3>章节卡二 + 3D 形体系列（网站 Hero 三连）</h3><span class="tc">00:16.0 – 00:23.5</span></div>
+    <img src="frames/k12.jpg" alt="I MAKE IT LOUD">
+    <div class="body">
+      <p>黑底章节卡「GPT 6 Astra Max」再次定场后，进入三个连续的"网页 Hero"式场景：</p>
+      <p>①「I MAKE IT LOUD.」——白字+酸绿强调词，右侧一颗绿银渐变金属扭结环缓慢旋转，左下小字+右上箭头按钮、四角 HUD 齐全；<br>② 整屏切酸绿底「TYPE IN MOTION.」黑字，右侧一条黑白条纹莫比乌斯带旋转，带子表面还有黑色文字在流动；<br>③ 切回黑底「FORM. WITHOUT LIMITS.」（WITHOUT LIMITS 酸绿），右侧绿银扭管做蠕动式变形旋转。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;文字全程静止、只让 3D 形体动（慢速自转 + 表面流动 + 形体蠕动），HUD 时间码持续走字；三个场景之间用整屏色块切换（黑→酸绿→黑）衔接，每组只换一句话和一个形体。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 09</span><h3>节拍区 · 音频波形 + 果冻星形</h3><span class="tc">00:24.5 – 00:26.5</span></div>
+    <img src="frames/k15.jpg" alt="HIT THE BEAT">
+    <div class="body">
+      <p>切米白底：「HIT THE BEAT.」黑粗字，左下小字「EVERY FRAME / EXACTLY ON TIME」，右侧一颗绿色果冻质感星形（高光透明），旁边一颗黑色小球；页面底部一条完整的音频波形条。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;波形条逐格跳动（模拟节拍）；果冻星形每拍做一次挤压回弹（squash & stretch）；黑白双球交错浮动——所有运动都卡在节拍点上，呼应文案 "exactly on time"。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 10</span><h3>关键词快闪 · 三连屏</h3><span class="tc">00:27.0 – 00:29.0</span></div>
+    <img src="frames/k17.jpg" alt="ALIVE">
+    <div class="body">
+      <p>三个单词三次整屏切换：黑底「BOLD.」→ 米白底「PRECISE.」→ 酸绿底「ALIVE.」。每个单词背后都叠同词描边空心幽灵字，角落有一颗小星芒图标旋转。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;每个词停留不到 1 秒即硬切；切换瞬间幽灵字层轻微错位再对齐；星芒持续自转。快闪段落负责在收尾前再拉一次节奏。</div>
+    </div>
+  </div>
+
+  <div class="scene">
+    <div class="head"><span class="no">场景 11</span><h3>终幕 CTA · I MOVE ATTENTION</h3><span class="tc">00:29.5 – 00:31.9</span></div>
+    <img src="frames/k18.jpg" alt="I MOVE ATTENTION">
+    <div class="body">
+      <p>回到黑底终幕：「I MOVE ATTENTION.」（ATTENTION 酸绿），右侧绿色果冻星形大号回归，左下 MOTION DESIGN 徽章 + 「LET'S MAKE IT MOVE」胶囊按钮 + 箭头，四角 HUD 收束全片。</p>
+      <div class="motion"><b>动态 →</b>&nbsp;果冻星形持续摆动高光流动；按钮悬停态在片中演示（箭头位移动效）；时间码走满全片最后一帧结束——首尾呼应（开场章节卡 → 终幕 CTA，同一套 HUD 闭环）。</div>
+    </div>
+  </div>
+
+  <h2>三、手法 ↔ 官网动态版对照表</h2>
+  <p class="lead">这 10 条手法里，网站 V3 已实现 6 条；未实现的 4 条是后续版本（V4+）最有价值的升级方向。</p>
+  <table class="use">
+    <tr><th style="width:24%">参考片手法</th><th style="width:44%">官网 V3 对应实现</th><th style="width:10%">状态</th><th style="width:22%">后续可借鉴</th></tr>
+    <tr><td>① 整屏色块切换</td><td>板块底色节奏：米白→酸绿→黑→酸绿→米白→黑→酸绿</td><td class="yes">✔ 已实现</td><td>可加"切换瞬间的硬切抖动"</td></tr>
+    <tr><td>② 打字机 + 强调句点</td><td>首屏打字机副标题（O 链 / H1）</td><td class="yes">✔ 已实现</td><td>标题句点用酸绿强调</td></tr>
+    <tr><td>③ 跑马灯文字墙</td><td>酸绿带 M1 + 墨色带 M2 + 背景双层描边跑马灯（H4）</td><td class="yes">✔ 已实现</td><td>可加"动态模糊量随速度变化"</td></tr>
+    <tr><td>⑧ HUD 取景框系统</td><td>底部 HUD 胶囊（时间码+进度条+章节号 G1）</td><td class="yes">✔ 已实现</td><td>可补四角取景框标记</td></tr>
+    <tr><td>⑩ 幽灵描边字叠层</td><td>每板块巨型幽灵字（R3）</td><td class="yes">✔ 已实现</td><td>快闪词切换时可加错位对齐</td></tr>
+    <tr><td>⑥ 图案矩阵动画</td><td>半调点阵画布呼吸波+指针涟漪（H5）</td><td class="yes">✔ 已实现</td><td>可加"图案逐格变形（星形/十字）"</td></tr>
+    <tr><td>④ 粒子聚散变形</td><td>—</td><td class="no2">✘ 未实现</td><td>Canvas 粒子流变：球→螺旋→弧，适合做第二个视觉高潮</td></tr>
+    <tr><td>⑤ 3D 金属/果冻形体</td><td>近似替代：CSS 光泽球体+光环（H6/H7）</td><td class="no2">◐ 近似</td><td>真 3D 形体（Three.js 扭结环/果冻星形）做 Hero 主视觉</td></tr>
+    <tr><td>⑦ Glitch 故障</td><td>—</td><td class="no2">✘ 未实现</td><td>标题 RGB 分离 + 位移撕裂 1–2 帧，转场瞬间用</td></tr>
+    <tr><td>⑨ 节拍可视化</td><td>—</td><td class="no2">✘ 未实现</td><td>数据区底部加波形条跳动，配"数字卡节拍"计数</td></tr>
+  </table>
+
+  <div class="foot">
+    <span>分析对象：用户提供的 Motion Reel 参考片（微信下载，31.9s）</span>
+    <span>产出：温州火烈鸟网络科技有限公司 · 2026-10-03 · 配套项目 D:\flamingotech-dynamic-site\</span>
+  </div>
+
+</div>
+</body>
+</html>
